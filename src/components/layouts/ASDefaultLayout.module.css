@@ -1,0 +1,27 @@
+.header {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  padding: 50px 25px 10px 25px;
+  background-color: #e5e0ec;
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  margin: 25px;
+}
+
+.footer {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}

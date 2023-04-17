@@ -1,16 +1,22 @@
+import { AuthInfo, setAuthInfo } from "@/store/slices/authSlice";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
 
-export interface AuthInfo {
-  access_token: string;
-  expires_in: number;
-  scope: string;
-  token_type: string | "Bear";
-  user_id: string;
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+/**
+ * This is the Server Side render function,
+ * after the OAuth2 process initiated from '/auth'
+ * @param context
+ * @returns
+ */
+export const getServerSideProps: GetServerSideProps<AuthInfo> = async (
+  context
+) => {
+  // Get the code from the redirect, present in the browsers URL.
   const code = context.query.code;
+  // Get secrets from .ENV
   const client_id = process.env.CLIENT_ID;
   const secret = process.env.SECRET;
   // ask for a one week token
@@ -21,6 +27,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "base64"
   );
 
+  // Get Token etc. from Fitbit OAuth2 API
   const body = await fetch("https://api.fitbit.com/oauth2/token", {
     method: "POST",
     body:
@@ -32,23 +39,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization: "Basic " + base64_secret,
     },
-  })
-    .then((response) => {
-      console.log("token response", response);
-      return response.json();
-    })
-    .then((body) => {
-      console.log("body", body);
-      return body;
-    });
+  }).then((response) => response.json());
 
   return {
     props: body, // will be passed to the page component as props
   };
 };
 
-export default function callback({ access_token, scope, user_id }: AuthInfo) {
-  console.log(access_token, user_id, scope);
+export default function callback(props: AuthInfo) {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(setAuthInfo(props));
+    router.push("/");
+  }, []);
+
   return (
     <>
       <Head>
