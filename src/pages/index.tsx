@@ -5,11 +5,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import {
   AuthInfo,
+  AuthState,
+  refetchAccessToken,
+  refetchToken,
   refreshAuthInfo,
   selectAuthInfo,
 } from "@/store/slices/authSlice";
-import ASNavigation from "@/components/organisms/ASNavigation";
-import ASDefaultLayout from "@/components/layouts/ASDefaultLayout";
+import Navigation from "@/components/organisms/Navigation";
+import DefaultLayout from "@/components/layouts/DefaultLayout";
+import useAuthOrRedirect from "@/data-hooks/useAuthOrRedirect";
+import SleepRater from "@/components/organisms/SleepRater";
+import Quality from "@/components/molecules/Quality";
 
 export const getStaticProps = () => {
   const client_id = process.env.CLIENT_ID;
@@ -25,20 +31,12 @@ interface HomeProps {
 }
 
 export default function Home({ client_id }: HomeProps) {
-  const authState: AuthInfo = useSelector(selectAuthInfo);
-  const router = useRouter();
-  const dispatch = useDispatch<any>();
-
-  useEffect(() => {
-    if (!authState.access_token) {
-      // router.push("/auth");
-    }
-    console.log(authState);
-  }, []);
+  const authState: AuthState = useAuthOrRedirect();
 
   return (
-    <ASDefaultLayout activePage={"/"}>
-      <h1>Home page</h1>
-    </ASDefaultLayout>
+    <DefaultLayout activePage={"/"}>
+      <SleepRater />
+      <Quality />
+    </DefaultLayout>
   );
 }

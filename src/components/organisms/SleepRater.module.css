@@ -1,0 +1,15 @@
+.card {
+  min-height: 110px;
+  margin-bottom: 20px;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button > p {
+  font-size: 16px;
+}

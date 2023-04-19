@@ -1,15 +1,16 @@
-import ASDefaultLayout from "@/components/layouts/ASDefaultLayout";
+import DefaultLayout from "@/components/layouts/DefaultLayout";
 import useAlcoholEntries from "@/data-hooks/useAlcohoholEntries";
+import useAuthOrRedirect from "@/data-hooks/useAuthOrRedirect";
 import useSleepByDate from "@/data-hooks/useSleepByDate";
-import { AuthInfo, selectAuthInfo } from "@/store/slices/authSlice";
+import { AuthInfo, AuthState, selectAuthInfo } from "@/store/slices/authSlice";
 import axios from "axios";
 import React from "react";
 import Plot from "react-plotly.js";
 import { useSelector } from "react-redux";
 
 export default function Stats() {
-  const authState: AuthInfo = useSelector(selectAuthInfo);
-  const result = useSleepByDate(authState);
+  const authState: AuthState = useAuthOrRedirect();
+  const result = useSleepByDate(authState.value);
   const entries = useAlcoholEntries();
 
   const handleClick = async () => {
@@ -18,7 +19,7 @@ export default function Stats() {
   };
 
   return (
-    <ASDefaultLayout activePage={"/stats"}>
+    <DefaultLayout activePage={"/stats"}>
       <h1>Stats page</h1>
       <Plot
         data={[
@@ -34,6 +35,6 @@ export default function Stats() {
         layout={{ width: 320, height: 240, title: "A Fancy Plot" }}
       />
       <button onClick={handleClick}>Add drink</button>
-    </ASDefaultLayout>
+    </DefaultLayout>
   );
 }

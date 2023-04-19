@@ -4,7 +4,7 @@ import QueryStatsIcon from "@mui/icons-material/QueryStats";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import { SyntheticEvent } from "react";
 import { useRouter } from "next/router";
-import styles from "./ASNavigation.module.css";
+import styles from "./Navigation.module.css";
 
 interface ASNavigationProps {
   activePage: ActivePage;
@@ -15,7 +15,7 @@ export type ActivePage = "/" | "/stats" | "/profile";
 /**
  *  For the different tabs: activePage = 0 | 1 | 2
  */
-export default function ASNavigation({ activePage }: ASNavigationProps) {
+export default function Navigation({ activePage }: ASNavigationProps) {
   const router = useRouter();
 
   const handleNav = (_e: SyntheticEvent, value: ActivePage) => {

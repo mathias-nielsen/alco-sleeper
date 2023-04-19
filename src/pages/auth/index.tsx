@@ -1,5 +1,6 @@
+import { Button } from "@mui/material";
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
+import styles from "./index.module.css";
 
 export default function manual() {
   function handleClick() {
@@ -26,8 +27,10 @@ export default function manual() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <button onClick={handleClick}>Signin with Fitbit</button>
+      <main className={styles.container}>
+        <Button onClick={handleClick} variant="contained">
+          Sign in with Fitbit
+        </Button>
       </main>
     </>
   );

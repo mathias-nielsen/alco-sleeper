@@ -4,6 +4,8 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import styles from "./callback.module.css";
+import { CircularProgress } from "@mui/material";
 
 /**
  * This is the Server Side render function,
@@ -63,7 +65,10 @@ export default function callback(props: AuthInfo) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>Redirected</div>
+      <main className={styles.container}>
+        <div>Processing your login</div>
+        <CircularProgress />
+      </main>
     </>
   );
 }

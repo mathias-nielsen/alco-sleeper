@@ -1,14 +1,15 @@
 import styles from "./profile.module.css";
-import ASDefaultLayout from "@/components/layouts/ASDefaultLayout";
+import DefaultLayout from "@/components/layouts/DefaultLayout";
 import useProfileData from "@/data-hooks/useProfileData";
-import { AuthInfo, selectAuthInfo } from "@/store/slices/authSlice";
+import { AuthState, selectAuthInfo } from "@/store/slices/authSlice";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import ASProfileCard from "@/components/molecules/ASProfileCard";
+import ProfileCard from "@/components/molecules/ProfileCard";
+import useAuthOrRedirect from "@/data-hooks/useAuthOrRedirect";
 
 export default function Profile() {
-  const authState: AuthInfo = useSelector(selectAuthInfo);
-  const user = useProfileData(authState);
+  const authState: AuthState = useAuthOrRedirect();
+  const user = useProfileData(authState.value);
 
   const formatGender = (gender: string) => {
     return (
@@ -17,7 +18,7 @@ export default function Profile() {
   };
 
   return (
-    <ASDefaultLayout activePage={"/profile"}>
+    <DefaultLayout activePage={"/profile"}>
       <div className={styles.container}>
         {user && (
           <>
@@ -26,12 +27,12 @@ export default function Profile() {
               className={styles.avatar}
               alt="Profile avatar"
             />
-            <ASProfileCard text={user.displayName} />
-            <ASProfileCard text={formatGender(user.gender)} />
-            <ASProfileCard text={user.weight} />
+            <ProfileCard text={user.displayName} />
+            <ProfileCard text={formatGender(user.gender)} />
+            <ProfileCard text={user.weight} />
           </>
         )}
       </div>
-    </ASDefaultLayout>
+    </DefaultLayout>
   );
 }

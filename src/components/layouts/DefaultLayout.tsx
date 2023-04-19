@@ -1,16 +1,16 @@
 import Head from "next/head";
-import ASNavigation, { ActivePage } from "../organisms/ASNavigation";
-import styles from "./ASDefaultLayout.module.css";
+import Navigation, { ActivePage } from "../organisms/Navigation";
+import styles from "./DefaultLayout.module.css";
 
-interface ASDefaultLayoutProps {
+interface DefaultLayoutProps {
   children: React.ReactNode;
   activePage: ActivePage;
 }
 
-export default function ASDefaultLayout({
+export default function DefaultLayout({
   children,
   activePage,
-}: ASDefaultLayoutProps) {
+}: DefaultLayoutProps) {
   const getDate = () => {
     const dateObj = new Date();
     const weekDay = dateObj.toLocaleDateString("en-EN", { weekday: "long" });
@@ -39,7 +39,7 @@ export default function ASDefaultLayout({
       </header>
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
-        <ASNavigation activePage={activePage} />
+        <Navigation activePage={activePage} />
       </footer>
     </>
   );

@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface AuthState {
+  triedRefetch: boolean;
+  value: AuthInfo;
+}
+
 export interface AuthInfo {
   access_token: string;
   expires_in: number;
@@ -10,6 +15,7 @@ export interface AuthInfo {
 }
 
 const initialState = {
+  triedRefetch: false,
   value: {
     access_token: "",
     expires_in: 0,
@@ -19,10 +25,6 @@ const initialState = {
     user_id: "",
   },
 };
-
-interface AuthState {
-  value: AuthInfo;
-}
 
 // First, create the thunk
 export const refreshAuthInfo = createAsyncThunk(
@@ -47,23 +49,62 @@ export const refreshAuthInfo = createAsyncThunk(
   }
 );
 
+export const refetchAccessToken = createAsyncThunk<AuthInfo | undefined>(
+  "auth/refreshAuthInfo",
+  async () => {
+    const keysStr = localStorage.getItem("keys");
+    console.log("trying to refetch token");
+    if (keysStr) {
+      const keys = JSON.parse(keysStr) as AuthInfo;
+      const body = await fetch("https://api.fitbit.com/1.1/oauth2/introspect", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          accept: "application/json",
+          Authorization: "Bearer " + keys.access_token,
+        },
+        body: "token=" + keys.access_token,
+      }).then((response) => response.json());
+
+      if (body.active) {
+        console.log("token from memory active");
+        return keys;
+      }
+    }
+  }
+);
+
 // Slice
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     setAuthInfo: (state: AuthState, action: PayloadAction<AuthInfo>) => {
-      localStorage.setItem("kingdom", action.payload.refresh_token);
+      localStorage.setItem("keys", JSON.stringify(action.payload));
       state.value = action.payload;
+    },
+    refetchToken: (state: AuthState) => {
+      const keysStr = localStorage.getItem("keys");
+      state.triedRefetch = true;
+      if (keysStr) {
+        const keys = JSON.parse(keysStr);
+        state.value = keys;
+      }
     },
   },
   extraReducers: (builder) => {
-    // Case for refreshing auth/token info
-    builder.addCase(refreshAuthInfo.fulfilled, (state, action) => {
-      console.log(state, action.payload);
+    builder.addCase(refetchAccessToken.fulfilled, (state, action) => {
+      if (action.payload) {
+        state.value = action.payload;
+        state.triedRefetch = false;
+      } else {
+        state.triedRefetch = true;
+        localStorage.removeItem("keys");
+        console.log("undefined");
+      }
     });
   },
 });
 
-export const { setAuthInfo } = authSlice.actions;
-export const selectAuthInfo = (state: any): AuthInfo => state.auth.value;
+export const { setAuthInfo, refetchToken } = authSlice.actions;
+export const selectAuthInfo = (state: any): AuthState => state.auth;
