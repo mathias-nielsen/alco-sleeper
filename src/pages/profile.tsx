@@ -1,5 +1,5 @@
 import styles from "./profile.module.css";
-import DefaultLayout from "@/components/layouts/DefaultLayout";
+import DefaultLayout from "@/components/pages/DefaultLayout";
 import useProfileData from "@/data-hooks/useProfileData";
 import { AuthState, selectAuthInfo } from "@/store/slices/authSlice";
 import React, { useEffect } from "react";

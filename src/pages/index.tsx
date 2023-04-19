@@ -12,10 +12,10 @@ import {
   selectAuthInfo,
 } from "@/store/slices/authSlice";
 import Navigation from "@/components/organisms/Navigation";
-import DefaultLayout from "@/components/layouts/DefaultLayout";
+import DefaultLayout from "@/components/pages/DefaultLayout";
 import useAuthOrRedirect from "@/data-hooks/useAuthOrRedirect";
 import SleepRater from "@/components/organisms/SleepRater";
-import Quality from "@/components/molecules/Quality";
+import QualityCircle from "@/components/molecules/QualityCircle";
 
 export const getStaticProps = () => {
   const client_id = process.env.CLIENT_ID;
@@ -36,7 +36,7 @@ export default function Home({ client_id }: HomeProps) {
   return (
     <DefaultLayout activePage={"/"}>
       <SleepRater />
-      <Quality />
+      <QualityCircle />
     </DefaultLayout>
   );
 }

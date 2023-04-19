@@ -1,4 +1,4 @@
-import DefaultLayout from "@/components/layouts/DefaultLayout";
+import DefaultLayout from "@/components/pages/DefaultLayout";
 import useAlcoholEntries from "@/data-hooks/useAlcohoholEntries";
 import useAuthOrRedirect from "@/data-hooks/useAuthOrRedirect";
 import useSleepByDate from "@/data-hooks/useSleepByDate";
