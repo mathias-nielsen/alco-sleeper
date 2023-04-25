@@ -1,0 +1,28 @@
+.container {
+    background-color: #E5E0EC;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.increments {
+    width: 100%
+}
+
+.total {
+    font-size: 32px;
+}
+
+.totalCircle {
+    margin: 40px 0;
+}
+
+.addIcon {
+    font-size: 28px;
+}
+
+.addCircle {
+    margin-top: 80px;
+}

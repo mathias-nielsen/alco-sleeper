@@ -7,10 +7,10 @@ interface QualityCircleProps {
   value: SubjectiveSleep;
 }
 
-export default function QualityCircle({ value = 100 }: QualityCircleProps) {
+export default function QualityCircle({ value }: QualityCircleProps) {
   return (
     <div className={styles.container}>
-      <h5>Quality</h5>
+      <p>Quality</p>
       <div>
         <CircularProgressWithLabel value={value} />
       </div>
