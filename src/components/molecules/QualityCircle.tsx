@@ -1,10 +1,9 @@
 import React from "react";
 import CircularProgressWithLabel from "../atoms/CircularWithLabel";
 import styles from "./QualityCircle.module.css";
-import { SubjectiveSleep } from "@/types";
 
 interface QualityCircleProps {
-  value: SubjectiveSleep;
+  value: number;
 }
 
 export default function QualityCircle({ value }: QualityCircleProps) {

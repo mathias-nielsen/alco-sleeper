@@ -13,14 +13,14 @@ const useAuthOrRedirect = () => {
   const dispatch = useDispatch<any>();
 
   useEffect(() => {
-    console.log("reloading");
+    // console.log("reloading");
     if (!authState.value.access_token) {
-      console.log("no token in memory");
+      // console.log("no token in memory");
       if (authState.triedRefetch) {
-        console.log("tried");
+        // console.log("tried");
         router.push("/auth");
       } else {
-        console.log("dispatching refetch");
+        // console.log("dispatching refetch");
         dispatch(refetchAccessToken());
       }
     }

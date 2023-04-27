@@ -1,5 +1,4 @@
-import {SubjectiveSleep} from "./SubjectiveSleep"
+import { SubjectiveSleep } from "./SubjectiveSleep";
+import { FitbitSleepDTO } from "./FitbitSleepDTO";
 
-export {
-  SubjectiveSleep
-}
+export { SubjectiveSleep, FitbitSleepDTO };

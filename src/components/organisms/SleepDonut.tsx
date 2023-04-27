@@ -2,8 +2,12 @@ import dynamic from "next/dynamic";
 //@ts-ignore
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 import { ColorPalette } from "@/types/colors";
+import { FitbitSleepDTO } from "@/types";
+import { minutesCalc } from "@/utils/minutesCalc";
 
-interface SleepDonutProps {}
+interface SleepDonutProps {
+  sleepData: FitbitSleepDTO;
+}
 
 /* Values here:
     awake: 3h 53m = 233
@@ -12,22 +16,31 @@ interface SleepDonutProps {}
     deep: 1h 26m = 86
  */
 
-const SleepDonut = ({}: SleepDonutProps) => {
+const SleepDonut = ({ sleepData }: SleepDonutProps) => {
   const calculateTotal = (sleepSum: number[]) => {
     const total = sleepSum.reduce((curr, acc) => {
       return acc + curr;
     }, 0);
-    const hours = Math.floor(total / 60);
-    const minutes = total % 60;
+    const [hours, minutes] = minutesCalc(total);
 
     return `${hours} h <br>${minutes} m`;
   };
 
-  console.log();
+  const calculateDataValues = (data: FitbitSleepDTO) => {
+    const summary = data.levels.summary;
+    return [
+      summary.wake.minutes,
+      summary.rem.minutes,
+      summary.light.minutes,
+      summary.deep.minutes,
+    ];
+  };
+
+  const dataValues = calculateDataValues(sleepData);
 
   const data = [
     {
-      values: [233, 95, 233, 86],
+      values: dataValues,
       labels: ["Awake", "REM", "Light", "Deep"],
       hole: 0.8,
       type: "pie",
@@ -59,7 +72,7 @@ const SleepDonut = ({}: SleepDonutProps) => {
           size: 20,
         },
         showarrow: false,
-        text: calculateTotal([233, 95, 233, 86]),
+        text: calculateTotal(dataValues),
       },
     ],
   };

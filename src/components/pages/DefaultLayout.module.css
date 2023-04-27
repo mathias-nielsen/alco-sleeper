@@ -6,13 +6,6 @@
   background-color: #e5e0ec;
 }
 
-.headerContent {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .main {
   flex-grow: 1;
   flex-shrink: 1;

@@ -3,6 +3,7 @@ import DefaultLayout from "@/components/pages/DefaultLayout";
 import useAuthOrRedirect from "@/data-hooks/useAuthOrRedirect";
 import DrinksSections from "@/components/pages/DrinksSections";
 import SleepSection from "@/components/pages/SleepSection";
+import SleepDateSelector from "@/components/organisms/SleepDateSelector";
 
 export const getStaticProps = () => {
   const client_id = process.env.CLIENT_ID;
@@ -21,7 +22,7 @@ export default function Home({ client_id }: HomeProps) {
   const authState: AuthState = useAuthOrRedirect();
 
   return (
-    <DefaultLayout activePage={"/"}>
+    <DefaultLayout activePage={"/"} headerChildren={<SleepDateSelector />}>
       <SleepSection />
       <DrinksSections />
     </DefaultLayout>

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "@/store/store";
 
 export interface AuthState {
   triedRefetch: boolean;
@@ -24,30 +25,7 @@ const initialState = {
     token_type: "",
     user_id: "",
   },
-};
-
-// First, create the thunk
-export const refreshAuthInfo = createAsyncThunk(
-  "auth/refreshAuthInfo",
-  async (client_id: string) => {
-    const kingdom = localStorage.getItem("kingdom");
-    if (kingdom) {
-      const response = await fetch("https://api.fitbit.com/oauth2/token", {
-        method: "POST",
-        body:
-          "grant_type=refresh_token" +
-          `&refresh_token=${kingdom}` +
-          `&client_id=${client_id}` +
-          `&expires_in=${28800}`,
-      });
-      const body = await response.json();
-      console.log("response", response);
-      console.log("body", body);
-      return [response, body];
-    }
-    return false;
-  }
-);
+} as AuthState;
 
 export const refetchAccessToken = createAsyncThunk<AuthInfo | undefined>(
   "auth/refreshAuthInfo",
@@ -83,17 +61,10 @@ export const authSlice = createSlice({
       localStorage.setItem("keys", JSON.stringify(action.payload));
       state.value = action.payload;
     },
-    refetchToken: (state: AuthState) => {
-      const keysStr = localStorage.getItem("keys");
-      state.triedRefetch = true;
-      if (keysStr) {
-        const keys = JSON.parse(keysStr);
-        state.value = keys;
-      }
-    },
   },
-  extraReducers: (builder) => {
-    builder.addCase(refetchAccessToken.fulfilled, (state, action) => {
+  extraReducers: (builder: any) => {
+    builder.addCase(refetchAccessToken.fulfilled, (state: any, action: any) => {
+      console.log("state", state);
       if (action.payload) {
         state.value = action.payload;
         state.triedRefetch = false;
@@ -106,5 +77,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAuthInfo, refetchToken } = authSlice.actions;
-export const selectAuthInfo = (state: any): AuthState => state.auth;
+export const { setAuthInfo } = authSlice.actions;
+export const selectAuthInfo = (state: RootState): AuthState => state.auth;

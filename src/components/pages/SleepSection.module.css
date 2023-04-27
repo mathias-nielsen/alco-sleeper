@@ -1,5 +1,9 @@
 .container {
-    padding: 25px;
+    padding: 18px;
+}
+
+.container > h3 {
+    margin-left: 10px;
 }
 
 .splitter {

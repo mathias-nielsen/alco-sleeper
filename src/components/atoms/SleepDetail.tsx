@@ -1,15 +1,16 @@
 import styles from "./SleepDetail.module.css";
 import { ColorPalette } from "@/types/colors";
+import { minutesCalc } from "@/utils/minutesCalc";
 
 interface SleepDetailProps {
   title: string;
-  hours: number;
-  minutes: number;
+  totalMinutes: number;
   color: ColorPalette;
 }
 
-const SleepDetail = ({ title, hours, minutes, color }: SleepDetailProps) => {
+const SleepDetail = ({ title, totalMinutes, color }: SleepDetailProps) => {
   const formatTime = () => {
+    const [hours, minutes] = minutesCalc(totalMinutes);
     const temp = ("0" + minutes).slice(-2);
     return `${hours}h ${temp}m`;
   };
