@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
-import Plot from "react-plotly.js";
+import dynamic from "next/dynamic";
+//@ts-ignore
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 import { FitbitSleepDTO } from "@/types";
 import { AlcoEntry } from "@/store/slices/alcoEntriesSlice";
 import {
