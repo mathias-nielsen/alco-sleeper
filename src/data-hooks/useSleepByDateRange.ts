@@ -1,7 +1,6 @@
 import { AuthInfo } from "@/store/slices/authSlice";
 import { useEffect, useState } from "react";
 import { FitbitSleepDTO } from "@/types";
-import formatToFitbitDate from "@/utils/formatToFitbitDate";
 
 const BASE_URL = process.env.NEXT_PUBLIC_FITBIT_API;
 
@@ -9,18 +8,16 @@ interface FitbitResponse {
   sleep: FitbitSleepDTO[];
 }
 
-const useSleepByDate = (
+const useSleepByDateRage = (
   authState: AuthInfo,
-  isoDate: string
-): FitbitSleepDTO | undefined => {
-  const [sleepByDate, setSleepByDate] = useState<FitbitSleepDTO | undefined>(
-    undefined
-  );
+  isoDates: string[]
+): FitbitSleepDTO[] | undefined => {
+  const [data, setData] = useState<FitbitSleepDTO[] | undefined>([]);
 
   useEffect(() => {
     async function get() {
-      const body: FitbitResponse | undefined = await fetch(
-        `${BASE_URL}/1.2/user/-/sleep/date/${formatToFitbitDate(isoDate)}.json`,
+      const body: FitbitResponse = await fetch(
+        `${BASE_URL}/1.2/user/-/sleep/date/${isoDates[0]}/${isoDates[1]}.json`,
         {
           headers: {
             authorization: "Bearer " + authState.access_token,
@@ -33,13 +30,13 @@ const useSleepByDate = (
           return response.json();
         }
       });
-      setSleepByDate(body?.sleep[0] ?? undefined);
+      setData(body?.sleep ?? undefined);
     }
 
     get();
-  }, [isoDate]);
+  }, [isoDates]);
 
-  return sleepByDate;
+  return data;
 };
 
-export default useSleepByDate;
+export default useSleepByDateRage;

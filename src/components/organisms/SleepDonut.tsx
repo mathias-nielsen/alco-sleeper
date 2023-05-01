@@ -85,6 +85,7 @@ const SleepDonut = ({ sleepData }: SleepDonutProps) => {
     <div style={{ marginTop: "20px" }}>
       <Plot
         style={{ backgroundColor: "#F4EFF4", whiteSpace: "pre-wrap" }}
+        //@ts-ignore
         data={data}
         layout={layout}
         config={config}

@@ -20,10 +20,11 @@ const DrinkList = ({ drinks }: DrinkListProps) => {
         return (
           <>
             <DrinkIncrementer
-              key={drink.description}
+              key={drink.title}
               title={drink.title}
               description={drink.description}
               amount={drink.amount}
+              setAmount={() => {}}
             />
             <Divider className={styles.divider} variant="middle" />
           </>

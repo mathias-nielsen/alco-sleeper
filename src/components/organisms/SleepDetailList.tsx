@@ -11,7 +11,7 @@ interface SleepDetailListProps {
 const SleepDetailList = ({ sleepData }: SleepDetailListProps) => {
   const summary = sleepData.levels.summary;
 
-  const calcColor = (key: string) => {
+  const calcColor = (key: string): ColorPalette => {
     switch (key) {
       case "wake":
         return ColorPalette.DARK_RED;
@@ -20,6 +20,7 @@ const SleepDetailList = ({ sleepData }: SleepDetailListProps) => {
       case "rem":
         return ColorPalette.LIGHT_RED;
       case "deep":
+      default:
         return ColorPalette.DARK_BLUE;
     }
   };
@@ -34,10 +35,12 @@ const SleepDetailList = ({ sleepData }: SleepDetailListProps) => {
 
   return (
     <div className={styles.container}>
-      {Object.keys(sleepData.levels.summary).map((key) => {
+      {Object.keys(sleepData.levels.summary).map((key: any) => {
         return (
           <SleepDetail
+            key={key}
             title={calcTitle(key)}
+            //@ts-ignore
             totalMinutes={sleepData.levels.summary[key].minutes}
             color={calcColor(key)}
           />

@@ -18,7 +18,7 @@ export default function Profile() {
   };
 
   return (
-    <DefaultLayout activePage={"/profile"}>
+    <DefaultLayout activePage={"/profile"} headerChildren={<div></div>}>
       <div className={styles.container}>
         {user && (
           <>

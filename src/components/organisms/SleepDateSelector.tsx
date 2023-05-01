@@ -20,7 +20,7 @@ const SleepDateSelector = () => {
     setShow((curr) => !curr);
   };
 
-  const handleChange = (newValue) => {
+  const handleChange = (newValue: any) => {
     setSelectedDate(newValue);
     //@ts-ignore
     dispatch(setDate(newValue.toISOString()));

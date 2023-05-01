@@ -4,37 +4,41 @@ import useAuthOrRedirect from "@/data-hooks/useAuthOrRedirect";
 import useSleepByDate from "@/data-hooks/useSleepByDate";
 import { AuthInfo, AuthState, selectAuthInfo } from "@/store/slices/authSlice";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import Plot from "react-plotly.js";
 import { useSelector } from "react-redux";
+import SleepDateRangeSelector from "@/components/organisms/SleepDateRangeSelector";
+import { selectDateValue } from "@/store/slices/selectedDateSlice";
+import useSleepByDateRage from "@/data-hooks/useSleepByDateRange";
+import WeekStatsGraph from "@/components/organisms/WeekStatsGraph";
+import { selectAlcoEntriesValue } from "@/store/slices/alcoEntriesSlice";
+import filterAlcoEntries from "@/utils/filterAlcoEntries";
 
 export default function Stats() {
+  // Redux
   const authState: AuthState = useAuthOrRedirect();
-  const result = useSleepByDate(authState.value);
-  const entries = useAlcoholEntries();
+  const dateRange = useSelector(selectDateValue);
+  const alcoEntriesState = useSelector(selectAlcoEntriesValue);
 
-  const handleClick = async () => {
-    const result = await axios.post("/api/supabase/v1");
-    console.log(result);
-  };
+  const result = filterAlcoEntries(
+    dateRange.value.dateRange,
+    alcoEntriesState.value.entries
+  );
+
+  // Data-hook
+  const sleepEntries = useSleepByDateRage(
+    authState.value,
+    dateRange.value.dateRange
+  );
 
   return (
-    <DefaultLayout activePage={"/stats"}>
-      <h1>Stats page</h1>
-      <Plot
-        data={[
-          {
-            x: [1, 2, 3],
-            y: [2, 6, 3],
-            type: "scatter",
-            mode: "lines+markers",
-            marker: { color: "red" },
-          },
-          { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
-        ]}
-        layout={{ width: 320, height: 240, title: "A Fancy Plot" }}
-      />
-      <button onClick={handleClick}>Add drink</button>
+    <DefaultLayout
+      activePage={"/stats"}
+      headerChildren={<SleepDateRangeSelector />}
+    >
+      {sleepEntries && (
+        <WeekStatsGraph sleepEntries={sleepEntries} alcoEntries={result} />
+      )}
     </DefaultLayout>
   );
 }
