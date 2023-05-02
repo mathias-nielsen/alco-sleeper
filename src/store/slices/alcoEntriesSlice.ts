@@ -28,6 +28,12 @@ export interface DrinkDefinition {
   description: string;
 }
 
+export interface DefinitionParts {
+  title: string;
+  strength: string;
+  size: string;
+}
+
 const initialState = {
   value: {
     entries: manuelEntries as AlcoEntry[],
@@ -91,33 +97,24 @@ export const alcoEntriesSlice = createSlice({
         });
       }
     },
+    addDefinition: (
+      state: AlcoEntriesState,
+      action: PayloadAction<DefinitionParts>
+    ) => {
+      const max = state.value.definitions.reduce(function (prev, current) {
+        return prev.id > current.id ? prev : current;
+      }); //returns object
+
+      state.value.definitions.push({
+        id: max.id + 1,
+        title: action.payload.title,
+        description: `${action.payload.size}ml, ${action.payload.strength}%`, // "40ml, 40%",
+      });
+    },
   },
 });
 
-const handleExisting = (state: AlcoEntriesState, date, referenceId) => {
-  console.log(date, referenceId);
-  state.value.entries.map((entry) => {
-    if (entry.date === date) {
-      console.log("entry found");
-      const entryExists = entry.drinkReferences.find(
-        (entry) => entry.id === referenceId
-      );
-
-      if (entryExists) {
-        entryExists.amount += 1;
-      } else {
-        entry.drinkReferences.push({
-          id: referenceId,
-          amount: 1,
-        });
-      }
-    }
-    return entry;
-  });
-};
-
-const handleNew = (state: AlcoEntriesState, date, referenceId) => {};
-
-export const { decrementEntry, incrementEntry } = alcoEntriesSlice.actions;
+export const { decrementEntry, incrementEntry, addDefinition } =
+  alcoEntriesSlice.actions;
 export const selectAlcoEntriesValue = (state: RootState): AlcoEntriesState =>
   state.alcoEntries;

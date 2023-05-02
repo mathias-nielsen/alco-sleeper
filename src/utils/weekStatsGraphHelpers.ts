@@ -35,6 +35,7 @@ export const calculateQualityTrace = (entries: FitbitSleepDTO[]) => {
       x: [], // Dates
       y: [], // Score
       type: "scatter",
+      mode: "lines",
       line: { shape: "vh" },
     }
   );

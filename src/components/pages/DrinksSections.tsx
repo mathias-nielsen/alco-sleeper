@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./DrinksSection.module.css";
 import DrinkList from "@/components/organisms/DrinkList";
-import Circle from "@/components/atoms/Circle";
-import AddIcon from "@mui/icons-material/Add";
 import DrinkTotal from "@/components/molecules/DrinkTotal";
 import { useSelector } from "react-redux";
 import {
@@ -11,6 +9,7 @@ import {
 } from "@/store/slices/alcoEntriesSlice";
 import { selectDateValue } from "@/store/slices/selectedDateSlice";
 import formatToFitbitDate from "@/utils/formatToFitbitDate";
+import DrinkDefinitionAdder from "@/components/organisms/DrinkDefinitionAdder";
 
 const DrinksSections = () => {
   const alcoEntries = useSelector(selectAlcoEntriesValue);
@@ -35,9 +34,7 @@ const DrinksSections = () => {
       </div>
 
       <div className={styles.addCircle}>
-        <Circle>
-          <AddIcon className={styles.addIcon} />
-        </Circle>
+        <DrinkDefinitionAdder />
       </div>
     </div>
   );
