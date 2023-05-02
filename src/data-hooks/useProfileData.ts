@@ -26,7 +26,6 @@ const useProfileData = (authState: AuthInfo): FitbitUser | undefined => {
 
     get();
   }, []);
-  console.log(user);
   return user;
 };
 

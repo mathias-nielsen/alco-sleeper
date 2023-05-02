@@ -10,9 +10,9 @@ interface PlotlyTrace extends Record<string, any> {
 export const calculateEntriesTrace = (entries: AlcoEntry[]) => {
   return entries.reduce(
     (acc: PlotlyTrace, curr) => {
-      const { date, amount } = curr;
+      const { date, total } = curr;
       acc.x.push(date);
-      acc.y.push(amount);
+      acc.y.push(total);
       return acc;
     },
     {
@@ -35,7 +35,7 @@ export const calculateQualityTrace = (entries: FitbitSleepDTO[]) => {
       x: [], // Dates
       y: [], // Score
       type: "scatter",
-      line: { shape: "hv" },
+      line: { shape: "vh" },
     }
   );
 };

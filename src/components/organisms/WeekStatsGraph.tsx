@@ -15,14 +15,10 @@ interface WeekStatsGraphProps {
 }
 
 const WeekStatsGraph = ({ sleepEntries, alcoEntries }: WeekStatsGraphProps) => {
-  console.log("sleepEntries", sleepEntries);
-  console.log("alcoEntries", alcoEntries);
   const data = [
     calculateQualityTrace(sleepEntries),
     calculateEntriesTrace(alcoEntries),
   ] as Plotly.Data[];
-
-  console.log("plot data", data);
 
   const config = {
     displayModeBar: false,

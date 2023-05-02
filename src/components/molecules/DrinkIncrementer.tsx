@@ -2,26 +2,48 @@ import React from "react";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import styles from "./DrinkIncrementer.module.css";
+import { useDispatch } from "react-redux";
+import {
+  decrementEntry,
+  incrementEntry,
+} from "@/store/slices/alcoEntriesSlice";
+import formatToFitbitDate from "@/utils/formatToFitbitDate";
 
 interface DrinkIncrementerProps {
+  referenceId: number;
   title: string;
   description: string;
   amount: number;
-  setAmount: (updater: (currValue: number) => void) => void;
+  selectedIsoDate: string;
 }
 
 const DrinkIncrementer = ({
+  referenceId,
   description,
   title,
   amount,
-  setAmount,
+  selectedIsoDate,
 }: DrinkIncrementerProps) => {
+  const dispatch = useDispatch();
+
   const decrease = () => {
-    setAmount((currValue) => currValue - 1);
+    //@ts-ignore
+    dispatch(
+      decrementEntry({
+        date: formatToFitbitDate(selectedIsoDate),
+        referenceId,
+      })
+    );
   };
 
   const increase = () => {
-    setAmount((currValue) => currValue + 1);
+    //@ts-ignore
+    dispatch(
+      incrementEntry({
+        date: formatToFitbitDate(selectedIsoDate),
+        referenceId,
+      })
+    );
   };
 
   return (

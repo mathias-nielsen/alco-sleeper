@@ -2,32 +2,41 @@ import React from "react";
 import DrinkIncrementer from "@/components/molecules/DrinkIncrementer";
 import { Divider } from "@mui/material";
 import styles from "./DrinkList.module.css";
+import { AlcoEntry, DrinkDefinition } from "@/store/slices/alcoEntriesSlice";
 
-interface DrinkIncrementItem {
-  title: string;
-  description: string;
+interface DrinkListProps {
+  definitions: DrinkDefinition[];
+  today?: AlcoEntry;
+  selectedIsoDate: string;
+}
+
+interface JoinedDrink extends DrinkDefinition {
   amount: number;
 }
 
-interface DrinkListProps {
-  drinks: DrinkIncrementItem[];
-}
+const DrinkList = ({ definitions, today, selectedIsoDate }: DrinkListProps) => {
+  const joined: JoinedDrink[] = definitions.map((definition) => {
+    const reference = (today?.drinkReferences ?? []).find(
+      (reference) => reference.id === definition.id
+    );
+    const amount = reference?.amount ?? 0;
+    return { ...definition, amount };
+  });
 
-const DrinkList = ({ drinks }: DrinkListProps) => {
   return (
     <div>
-      {drinks.map((drink) => {
+      {joined.map((joined) => {
         return (
-          <>
+          <div key={joined.id}>
             <DrinkIncrementer
-              key={drink.title}
-              title={drink.title}
-              description={drink.description}
-              amount={drink.amount}
-              setAmount={() => {}}
+              referenceId={joined.id}
+              title={joined.title}
+              description={joined.description}
+              amount={joined.amount}
+              selectedIsoDate={selectedIsoDate}
             />
             <Divider className={styles.divider} variant="middle" />
-          </>
+          </div>
         );
       })}
     </div>

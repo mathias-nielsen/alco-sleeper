@@ -22,7 +22,6 @@ export default async function handler(
       break;
     case "POST":
       const post = await createNew();
-      console.log("post result", post);
       res.status(200).json({ result: post.data });
       break;
   }

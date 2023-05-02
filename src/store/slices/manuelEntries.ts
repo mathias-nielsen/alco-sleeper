@@ -1,90 +1,259 @@
-import { AlcoEntry } from "@/store/slices/alcoEntriesSlice";
+const drinksDefinitions = [
+  {
+    id: 1,
+    title: "Red wine",
+    description: "150ml, 16%",
+  },
+  {
+    id: 2,
+    title: "Special Beer",
+    description: "450ml, 7%",
+  },
+  {
+    id: 3,
+    title: "White wine",
+    description: "150ml, 9%",
+  },
+  {
+    id: 4,
+    title: "Beer",
+    description: "330ml, 4.6%",
+  },
+  {
+    id: 5,
+    title: "Snaps",
+    description: "40ml, 40%",
+  },
+];
 
 const manuelEntries = [
   {
     date: "2023-03-10",
-    amount: 2,
+    total: 2,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 2,
+      },
+    ],
   },
   {
     date: "2023-03-11",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-03-14",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 2,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-03-15",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 2,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-03-17",
-    amount: 3,
+    total: 3,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 3,
+      },
+    ],
   },
   {
     date: "2023-03-19",
-    amount: 2,
+    total: 2,
+    drinkReferences: [
+      {
+        id: 2,
+        amount: 2,
+      },
+    ],
   },
   {
     date: "2023-03-24",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 2,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-03-25",
-    amount: 9,
+    total: 9,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 5,
+      },
+      {
+        id: 2,
+        amount: 4,
+      },
+    ],
   },
   {
     date: "2023-03-26",
-    amount: 2,
+    total: 2,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 1,
+      },
+      {
+        id: 2,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-03-30",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 3,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-03-31",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 2,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-04-01",
-    amount: 7,
+    total: 7,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 7,
+      },
+    ],
   },
   {
     date: "2023-04-04",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-04-07",
-    amount: 7,
+    total: 7,
+    drinkReferences: [
+      {
+        id: 4,
+        amount: 7,
+      },
+    ],
   },
   {
     date: "2023-04-08",
-    amount: 10,
+    total: 11,
+    drinkReferences: [
+      {
+        id: 4,
+        amount: 6,
+      },
+      {
+        id: 5,
+        amount: 5,
+      },
+    ],
   },
   {
     date: "2023-04-09",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 4,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-04-18",
-    amount: 5,
+    total: 5,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 5,
+      },
+    ],
   },
   {
     date: "2023-04-22",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-04-23",
-    amount: 3,
+    total: 3,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 2,
+      },
+      {
+        id: 4,
+        amount: 1,
+      },
+    ],
   },
   {
     date: "2023-04-25",
-    amount: 1,
+    total: 1,
+    drinkReferences: [
+      {
+        id: 1,
+        amount: 1,
+      },
+    ],
   },
+  // One AlcoEntry
   {
     date: "2023-04-27",
-    amount: 2,
+    total: 2,
+    drinkReferences: [
+      {
+        id: 3,
+        amount: 2,
+      },
+    ],
   },
 ];
 
-export default manuelEntries as AlcoEntry[];
+export { manuelEntries, drinksDefinitions };

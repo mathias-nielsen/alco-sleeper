@@ -3,7 +3,7 @@ import CircularProgressWithLabel from "../atoms/CircularWithLabel";
 import styles from "./QualityCircle.module.css";
 
 interface QualityCircleProps {
-  value: number;
+  value: number | undefined;
 }
 
 export default function QualityCircle({ value }: QualityCircleProps) {

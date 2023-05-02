@@ -8,12 +8,28 @@ import {
   SentimentVeryDissatisfied,
   SentimentVeryDissatisfiedOutlined,
 } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import formatToFitbitDate from "@/utils/formatToFitbitDate";
+import { setSubjectiveSleep } from "@/store/slices/subjectiveSleepSlice";
+import { selectDateValue } from "@/store/slices/selectedDateSlice";
 
-interface ASSleepRaterProps {}
+interface ASSleepRaterProps {
+  selectedDate: string;
+  hide: () => void;
+}
 
-export default function SleepRater({}: ASSleepRaterProps) {
-  const handleClick = (rating: number) => {
-    console.log("Subjective score: " + rating);
+export default function SleepRater({ selectedDate, hide }: ASSleepRaterProps) {
+  const dispatch = useDispatch();
+
+  const handleClick = async (rating: number) => {
+    //@ts-ignore
+    await dispatch(
+      setSubjectiveSleep({
+        date: formatToFitbitDate(selectedDate),
+        rating,
+      })
+    );
+    hide();
   };
 
   return (

@@ -7,14 +7,16 @@ import {
   SentimentVeryDissatisfied,
   SentimentVeryDissatisfiedOutlined,
   SentimentVerySatisfied,
+  QuestionMarkOutlined,
 } from "@mui/icons-material";
 import Circle from "@/components/atoms/Circle";
 
 interface MySleepProps {
-  value: SubjectiveSleep;
+  value: SubjectiveSleep | undefined;
+  onClick: () => void;
 }
 
-const MySleepCircle = ({ value }: MySleepProps) => {
+const MySleepCircle = ({ value, onClick }: MySleepProps) => {
   const getSmiley = () => {
     switch (value) {
       case 100:
@@ -27,11 +29,13 @@ const MySleepCircle = ({ value }: MySleepProps) => {
         return <SentimentVeryDissatisfied className={styles.icon} />;
       case 60:
         return <SentimentVeryDissatisfiedOutlined className={styles.icon} />;
+      default:
+        return <QuestionMarkOutlined fontSize={"large"} />;
     }
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={onClick}>
       <p>My Sleep</p>
       <Circle>{getSmiley()}</Circle>
     </div>

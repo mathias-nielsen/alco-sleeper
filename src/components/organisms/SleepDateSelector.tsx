@@ -42,7 +42,11 @@ const SleepDateSelector = () => {
       </div>
       {show && (
         <div>
-          <DateCalendar value={selectedDate} onChange={handleChange} />
+          <DateCalendar
+            disableFuture={true}
+            value={selectedDate}
+            onChange={handleChange}
+          />
         </div>
       )}
     </>

@@ -4,7 +4,6 @@ import styles from "./index.module.css";
 
 export default function manual() {
   function handleClick() {
-    console.log("trying to login");
     const authUrl = createAuthUrl();
     window.location.replace(authUrl);
   }

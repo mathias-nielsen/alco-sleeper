@@ -16,8 +16,8 @@ const initialState = {
   value: {
     date: new Date().toISOString(),
     dateRange: [
-      formatToFitbitDate(dayjs().startOf("week").toISOString()),
-      formatToFitbitDate(dayjs().endOf("week").toISOString()),
+      formatToFitbitDate(dayjs().subtract(7, "day").toISOString()),
+      formatToFitbitDate(dayjs().toISOString()),
     ],
   },
 } as DateState;

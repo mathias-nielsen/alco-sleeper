@@ -31,7 +31,6 @@ export const refetchAccessToken = createAsyncThunk<AuthInfo | undefined>(
   "auth/refreshAuthInfo",
   async () => {
     const keysStr = localStorage.getItem("keys");
-    console.log("trying to refetch token");
     if (keysStr) {
       const keys = JSON.parse(keysStr) as AuthInfo;
       const body = await fetch("https://api.fitbit.com/1.1/oauth2/introspect", {
@@ -45,7 +44,6 @@ export const refetchAccessToken = createAsyncThunk<AuthInfo | undefined>(
       }).then((response) => response.json());
 
       if (body.active) {
-        console.log("token from memory active");
         return keys;
       }
     }
@@ -64,14 +62,12 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder: any) => {
     builder.addCase(refetchAccessToken.fulfilled, (state: any, action: any) => {
-      console.log("state", state);
       if (action.payload) {
         state.value = action.payload;
         state.triedRefetch = false;
       } else {
         state.triedRefetch = true;
         localStorage.removeItem("keys");
-        console.log("undefined");
       }
     });
   },

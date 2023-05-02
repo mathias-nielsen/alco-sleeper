@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Circle from "@/components/atoms/Circle";
 
 export default function CircularProgressWithLabel(
-  props: CircularProgressProps & { value: number }
+  props: CircularProgressProps
 ) {
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
@@ -30,7 +30,11 @@ export default function CircularProgressWithLabel(
         }}
       >
         <Circle>
-          <p>{`${Math.round(props.value)}%`}</p>
+          <p>
+            {props.value && props.value != 0
+              ? `${Math.round(props.value)}%`
+              : "N/A"}
+          </p>
         </Circle>
       </Box>
     </Box>

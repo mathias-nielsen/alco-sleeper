@@ -8,7 +8,6 @@ const useAlcoholEntries = () => {
       fetch("/api/supabase/v1")
         .then((response) => response.json())
         .then((body) => {
-          console.log(body);
           setEntries(body);
         });
     }
